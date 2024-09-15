@@ -3,7 +3,8 @@ import { headers } from 'next/headers'
 import { clerkClient, WebhookEvent } from '@clerk/nextjs/server'
 import {createUser, deleteUser, updateUser } from '@/lib/actions/user.actions'
 import { NextResponse } from 'next/server'
- //orifinal code from clerk webhook
+import { UpdateUserParams } from '@/types'
+
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
@@ -49,11 +50,10 @@ export async function POST(req: Request) {
   }
 
   // Do something with the payload
-  // For this guide, you simply log the payload to the console
-  // Get the ID and type
+  
   const { id } = evt.data;
   const eventType = evt.type;
- 
+  
   if(eventType === 'user.created') {
     console.log('User creation webhook received:', evt.data);
     const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
@@ -62,8 +62,8 @@ export async function POST(req: Request) {
       clerkId: id,
       email: email_addresses[0].email_address,
       username: username!,
-      firstName: first_name ?? '',
-      lastName: last_name ?? '',
+      firstName: first_name || '',
+      lastName: last_name || '',
       photo: image_url,
     }
 
@@ -82,22 +82,16 @@ export async function POST(req: Request) {
 
   if (eventType === 'user.updated') {
     const {id, image_url, first_name, last_name, username } = evt.data
-
-    // const user = {
-    //   firstName: first_name,
-    //   lastName: last_name,
-    //   username: username!,
-    //   photo: image_url,
-    // }
-    const user = {
-      firstName: first_name ?? '',
-      lastName: last_name ?? '',
+  
+    const user: UpdateUserParams = {
+      firstName: first_name || '',
+      lastName: last_name || '',
       username: username!,
       photo: image_url,
-    };
-
+    }
+  
     const updatedUser = await updateUser(id, user)
-
+  
     return NextResponse.json({ message: 'OK', user: updatedUser })
   }
 
@@ -111,4 +105,3 @@ export async function POST(req: Request) {
  
   return new Response('', { status: 200 })
 }
- 
