@@ -2,41 +2,27 @@
 
 import { revalidatePath } from 'next/cache'
 
-// import { connectToDatabase } from '@/lib/database'
+import { connectToDatabase } from '@/lib/database'
 import User from '@/lib/database/models/user.model'
 import Order from '@/lib/database/models/order.model'
 import Event from '@/lib/database/models/event.model'
 import { handleError } from '@/lib/utils'
 
 import { CreateUserParams, UpdateUserParams } from '@/types'
-import connectToDatabase from '../database'
-
-// export async function createUser(user: CreateUserParams) {
-//   console.log('User creation :', user);
-//   try {
-//     console.log(user)
-//     await connectToDatabase()
-
-//     const newUser = await User.create(user)
-//     return JSON.parse(JSON.stringify(newUser))
-//   } catch (error) {
-//     handleError(error)
-//   }
-// }
-export async function createUser(user:CreateUserParams) {
-  console.log('createUser called with:', user); // Log the user data being passed
+ 
+export async function createUser(user: CreateUserParams) {
+  console.log('User creation :', user);
   try {
-    await connectToDatabase(); // Ensure MongoDB connection
-    const newUser = new User(user); // Assuming Mongoose is used
-    await newUser.save(); // Save the user to MongoDB
-    console.log('User successfully saved:', newUser); // Log success
-    return newUser;
+    console.log(user)
+    await connectToDatabase()
+
+    const newUser = await User.create(user)
+    return JSON.parse(JSON.stringify(newUser))
   } catch (error) {
-    console.error('Error in createUser:', error); // Log any errors
-    throw new Error('Failed to create user');
+    handleError(error)
   }
 }
-
+ 
 
 export async function getUserById(userId: string) {
   try {
