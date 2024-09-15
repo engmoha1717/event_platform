@@ -1,6 +1,8 @@
 import { authMiddleware } from "@clerk/nextjs/server";
 
-  
+console.log('CLERK_ENCRYPTION_KEY:', process.env.CLERK_ENCRYPTION_KEY ? 'Set' : 'Not set');
+console.log('CLERK_SECRET_KEY:', process.env.CLERK_SECRET_KEY ? 'Set' : 'Not set');
+
 export default authMiddleware({
   publicRoutes: [
     '/',
