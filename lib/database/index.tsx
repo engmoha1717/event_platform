@@ -15,7 +15,7 @@ export const connectToDatabase = async () => {
   })
 
   cached.conn = await cached.promise;
-x
+
   return cached.conn;
 }
  
