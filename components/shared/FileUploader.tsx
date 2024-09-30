@@ -1,5 +1,8 @@
 import React, { Dispatch, SetStateAction, useCallback } from 'react'
-// No need to import File type as it is globally available in TypeScript
+// import type { FileWithPath } from '@uploadthing/react'
+
+type FileWithPath = File;
+
 
 // interface FileUploaderProps {
 //   imageUrl: string;
@@ -20,7 +23,7 @@ import { convertFileToUrl } from '@/lib/utils'
   
 const FileUploader = ({ imageUrl, onFieldChange, setFiles }: FileUploaderProps) => {
  
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]))
   }, []);
