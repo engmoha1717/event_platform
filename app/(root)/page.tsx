@@ -1,11 +1,21 @@
 import CategoryFilter from '@/components/shared/CategoryFilter'
+import Collection from '@/components/shared/Collection'
 import Search from '@/components/shared/Search'
 import { Button } from '@/components/ui/button'
+import { getAllEvents } from '@/lib/actions/event.actions'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const page = () => {
+const Home = async() => {
+  const events =await getAllEvents({
+    query: '',
+    limit: 6,
+    page: 1,
+    category: ''
+  })
+  console.log(events)
+
   return (
     <>
     <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
@@ -37,18 +47,18 @@ const page = () => {
           <CategoryFilter />
         </div>
 
-        {/* <Collection 
+        <Collection
           data={events?.data}
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
           limit={6}
-          page={page}
+          page={1}
           totalPages={events?.totalPages}
-        /> */}
+        />
       </section>
     </>
   )
 }
 
-export default page
+export default Home
