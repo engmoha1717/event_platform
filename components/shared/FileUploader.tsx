@@ -2,8 +2,7 @@ import React, { Dispatch, SetStateAction, useCallback } from 'react'
  
 
 type FPath = File;
-
-
+ 
 // interface FileUploaderProps {
 //   imageUrl: string;
 //   onFieldChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,10 +14,12 @@ type FileUploaderProps = {
   setFiles: Dispatch<SetStateAction<File[]>>
 }
 // Note: `useUploadThing` is IMPORTED FROM YOUR CODEBASE using the `generateReactHelpers` function
-import { useDropzone } from "@uploadthing/react";
+// import { useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 import { Button } from '../ui/button'
 import { convertFileToUrl } from '@/lib/utils'
+import { useDropzone } from '@uploadthing/react/hooks';
+ 
  
   
 const FileUploader = ({ imageUrl, onFieldChange, setFiles }: FileUploaderProps) => {
