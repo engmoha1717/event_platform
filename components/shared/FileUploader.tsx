@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback } from 'react'
  
-
 type FPath = File;
  
 // interface FileUploaderProps {
